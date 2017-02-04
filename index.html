@@ -57,8 +57,7 @@
     }
     $(".tangram").on("touchstart",function (e) {
         e.preventDefault();
-        this.parentNode.removeChild(this);
-        $("#p").append(this);
+        $("#p").append($(this).detach());
         var index=$(this).attr("index");
         fx[index] = e.targetTouches[0].pageX;
         fy[index] = e.targetTouches[0].pageY;
