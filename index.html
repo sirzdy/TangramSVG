@@ -23,13 +23,13 @@
 </head>
 <body oncontextmenu="return false;">
 <svg  id="p" style="position: fixed;top: 50%;left: 50%;width: 400px;height: 400px;transform: translateX(-50%) translateY(-50%);border: 2px solid #999;"  version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <polygon index="1" class="tangram" points="100,100 300,100 200,200" style="fill:#caff67;"/>
-    <polygon index="2" class="tangram" points="100,100 100,300 200,200" style="fill:#67becf;"/>
-    <polygon index="3" class="tangram" points="250,150 200,200 250,250" style="fill:#f6ca29;"/>
-    <polygon index="4" class="tangram" points="100,300 150,250 200,300" style="fill:#ef3d61;"/>
-    <polygon index="5" class="tangram" points="300,200 200,300 300,300" style="fill:#f9f51a;"/>
-    <polygon index="6" class="tangram" points="200,200 250,250 200,300 150,250" style="fill:#d1c1d1;"/>
-    <polygon index="7" class="tangram" points="300,100 300,200 250,250 250,150" style="fill:#fa8ccc;"/>
+    <polygon index="1" class="tangram" points="100,100 300,100 200,200" style="fill:#caff67;" />
+    <polygon index="2" class="tangram" points="100,100 100,300 200,200" style="fill:#67becf;" />
+    <polygon index="3" class="tangram" points="250,150 200,200 250,250" style="fill:#f6ca29;" />
+    <polygon index="4" class="tangram" points="100,300 150,250 200,300" style="fill:#ef3d61;" />
+    <polygon index="5" class="tangram" points="300,200 200,300 300,300" style="fill:#f9f51a;" />
+    <polygon index="6" class="tangram" points="200,200 250,250 200,300 150,250" style="fill:#d1c1d1;" />
+    <polygon index="7" class="tangram" points="300,100 300,200 250,250 250,150" style="fill:#fa8ccc;" />
 </svg>
 <div id="rotate" style="display: none;position: fixed;background-color: #eeeeee">
     <button ontouchstart="rotateObj(1)">顺时针1°</button>
@@ -39,7 +39,6 @@
 </div>
 <div  style="position: fixed;bottom: 0px;">
     请在移动设备上玩耍，单指移动，长按0.5s呼出旋转菜单，不允许放大。<br>
-    缺陷：使用svg，尚未实现当前操作的板块置顶。
 </div>
 <script>
     var fx=new Object();
@@ -58,6 +57,8 @@
     }
     $(".tangram").on("touchstart",function (e) {
         e.preventDefault();
+        this.parentNode.removeChild(this);
+        $("#p").append(this);
         var index=$(this).attr("index");
         fx[index] = e.targetTouches[0].pageX;
         fy[index] = e.targetTouches[0].pageY;
@@ -79,7 +80,7 @@
     }).on("touchend", function (e) {
         clearTimeout(timeOutEvent);
     });
-    function longPress(e){
+    function longPress(){
         timeOutEvent = 0;
         index=$(curObj).attr("index");
         $("#rotate").css("left",fx[index]).css("top",fy[index]);
